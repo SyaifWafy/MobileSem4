@@ -1,6 +1,11 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:projekmobile_sem4/api_connection/api_connection.dart';
 import 'package:projekmobile_sem4/authentication/login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:projekmobile_sem4/model/user.dart';
 
 class SignUpScreen extends StatefulWidget 
 {
@@ -16,9 +21,83 @@ class _SignUpScreenState extends State<SignUpScreen>
   var usernameController = TextEditingController();
   var passwordController = TextEditingController();
   var fullnameController = TextEditingController();
-  var pertanyaannameController = TextEditingController();
+  var pertanyaancontroller = TextEditingController();
   var jawabanController = TextEditingController();
   var isObsecure = true.obs;
+
+  validateUserName()async
+  {
+    try
+    {
+      var res = await http.post(
+        Uri.parse(API.validateUserName),
+        body: {
+          'username_cus': usernameController.text.trim(),
+        },
+      );
+
+      if(res.statusCode == 200) //from flutter app the conection with api to server - succes
+      {
+        var resBodyOfValidateUsername = jsonDecode(res.body);
+
+        if(resBodyOfValidateUsername['usernameFound']==true)
+        {
+          Fluttertoast.showToast(msg: "Username tersedia");
+        }
+        else
+        {
+          //register & save new user record to database
+          registerAndSaveUserRecord();
+
+        }
+
+      }
+
+
+    }
+    catch(e)
+    {
+
+    }
+
+  }
+  registerAndSaveUserRecord() async
+  {
+    User userModel = User(
+      usernameController.text.trim(),
+      passwordController.text.trim(),
+      fullnameController.text.trim(),
+      pertanyaancontroller.text.trim(),
+      jawabanController.text.trim()
+    );
+    try
+    {
+      var res = await http.post(
+        Uri.parse(API.signUp),
+        body: userModel.toJson(),
+      );
+      if(res.statusCode == 200)
+      {
+        var resBodyOfSignUp = jsonDecode(res.body);
+        if(resBodyOfSignUp['succes']== true)
+        {
+          Fluttertoast.showToast(msg: "selamat anda berhasil daftar");
+        }
+        else
+        {
+          Fluttertoast.showToast(msg: "Coba Lagi");
+        }
+      }
+    }
+    catch(e)
+    {
+      print(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
+    }
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -222,7 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen>
 
                                   //pertanyaan
                                   TextFormField(
-                                    controller: pertanyaannameController,
+                                    controller: pertanyaancontroller,
                                     validator: (val) => val == "" ? "Please write Pertanyaan":null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
@@ -263,6 +342,7 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     ),
                                   ),
                                   const SizedBox(height: 18,),
+                                  
 
                         
                                   //jawaban
@@ -317,8 +397,10 @@ class _SignUpScreenState extends State<SignUpScreen>
                                     child: InkWell(
                                       onTap: ()
                                       {
-                                        Get.to(LoginScreen());
-
+                                       if(formKey.currentState!.validate())
+                                       {
+                                        validateUserName();
+                                       } 
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
