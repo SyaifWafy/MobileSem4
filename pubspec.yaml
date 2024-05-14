@@ -38,6 +38,11 @@ dependencies:
   get: ^4.6.6
   http: ^1.2.0
   fluttertoast: ^8.2.5
+  animate_do: ^3.0.2
+  shape_of_view_null_safe: ^2.0.0
+  google_fonts: ^4.0.1
+  water_drop_nav_bar: ^2.2.0+5
+  
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +68,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - images/
+  - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

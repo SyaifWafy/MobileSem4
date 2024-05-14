@@ -16,7 +16,7 @@ class User
 
   Map<String, dynamic> toJson() =>
   {
-    'username': username_cus.toString(),
+    'username_cus': username_cus.toString(),
     'pw_cus': pw_cus,
     'fullname_cus': fullname_cus,
     'pertanyaan': pertanyaan,
