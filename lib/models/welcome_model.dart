@@ -27,7 +27,7 @@ List<WelcomeModel> welcomeComponents = [
       imageUrl: "assets/images/carnaval.jpg"),
   WelcomeModel(
       title: "JermberWonder",
-      subTitle: "Pengaduan",
+      subTitle: "Masukan",
       description:
           "Memberikan kenyamanan wisatawan",
       imageUrl: "assets/images/happy.jpg"),

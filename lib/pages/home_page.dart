@@ -298,7 +298,7 @@ import 'package:get/get.dart';
                       "assets/images/jw.png",
                       width: 70,
                       height: 70,
-                      fit: BoxFit.cover,
+                      
 
                     ),
                   ),
