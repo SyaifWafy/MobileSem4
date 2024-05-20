@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
+import 'package:projekmobile_sem4/pages/home_page.dart';
 
 import 'signup_screen.dart';
 
@@ -20,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, cons)
         {
@@ -181,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     child: InkWell(
                                       onTap: ()
                                       {
-                        
+                                        Get.to(HomePage());
                                       },
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
@@ -221,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 child: const Text(
                                   "Daftar disini",
                                   style: TextStyle(
-                                    color: Colors.purpleAccent,
+                                    color: Colors.deepPurpleAccent,
                                   ),
                                 ),
                               ),
@@ -244,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 child: const Text(
                                   "Ganti disini",
                                   style: TextStyle(
-                                    color: Colors.purpleAccent,
+                                    color: Colors.deepPurpleAccent,
                                   ),
                                 ),
                               ),

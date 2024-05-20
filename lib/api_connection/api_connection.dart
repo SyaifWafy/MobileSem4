@@ -1,6 +1,6 @@
 class API 
 {
-  static const hostConnect = "http://192.168.100.13/api_jemberwonder";
+  static const hostConnect = "http:// 192.168.100.11/api_jemberwonder";
   static const hostConnectUser = "$hostConnect/user";
 
   //signUp user
