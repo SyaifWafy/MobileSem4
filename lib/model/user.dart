@@ -14,6 +14,12 @@ class User
     this.jawaban,
   );
 
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    int.parse(json["username_cus"]) as String,
+    json["pw_cus"]
+    json["fullname_cus"]
+  );
+
   Map<String, dynamic> toJson() =>
   {
     'username_cus': username_cus.toString(),
