@@ -120,29 +120,6 @@ import 'package:get/get.dart';
                         width: size.width,
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: TabBar(
-                            overlayColor:
-                                MaterialStateProperty.all(Colors.transparent),
-                            labelPadding: EdgeInsets.only(
-                                left: size.width * 0.05,
-                                right: size.width * 0.05),
-                            controller: tabController,
-                            labelColor: Colors.black,
-                            unselectedLabelColor: Colors.grey,
-                            isScrollable: true,
-                            indicatorSize: TabBarIndicatorSize.label,
-                            indicator: const CircleTabBarIndicator(
-                              color: Colors.deepPurpleAccent,
-                              radius: 4,
-                            ),
-                            tabs: const [
-                              Tab(
-                                text: "Wisata alam",
-                              ),
-                              Tab(text: "Wisata Laut"),
-                              Tab(text: "Wisata Lainnya"),
-                            ],
-                          ),
                         ),
                       ),
                     ),
@@ -159,8 +136,6 @@ import 'package:get/get.dart';
                               TabViewChild(
                                 list: places,
                               ),
-                              TabViewChild(list: inspiration),
-                              TabViewChild(list: popular),
                             ]),
                       ),
                     ),
@@ -298,7 +273,7 @@ import 'package:get/get.dart';
                       "assets/images/jw.png",
                       width: 70,
                       height: 70,
-                      fit: BoxFit.cover,
+                      
 
                     ),
                   ),

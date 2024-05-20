@@ -26,9 +26,12 @@ List<TabBarModel> places = [
       title: "Taman Nasional Meru Betiri",
       location: "Betiri",
       image: "assets/images/alam3.jpg",
-      price: 221)
-];
-List<TabBarModel> inspiration = [
+      price: 221),
+  TabBarModel(
+      title: "Pantai Papuma",
+      location: "Desa Lolejer",
+      image: "assets/images/laut1.jpg",
+      price: 543),
   TabBarModel(
       title: "Pantai Papuma",
       location: "Desa Lolejer",
@@ -43,9 +46,7 @@ List<TabBarModel> inspiration = [
       title: "Teluk Love",
       location: "Ambulu",
       image: "assets/images/laut3.jpg",
-      price: 124)
-];
-List<TabBarModel> popular = [
+      price: 124),
   TabBarModel(
       title: "wana Wisata Simbat",
       location: "Wuluhan",

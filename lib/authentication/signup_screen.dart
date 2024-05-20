@@ -306,7 +306,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: InkWell(
                                       onTap: () {
                                         if (formKey.currentState!.validate()) {
-                                          // validateUserName();
                                           // Backend logic commented out
                                         }
                                       },

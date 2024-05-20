@@ -18,8 +18,8 @@ class _MainWrapperState extends State<MainWrapper> {
   int currentIndex = 0;
   List<Widget> pages = const [
     HomePage(),
-    wisata(),
-    event(),
+    WisataPage(),
+    EventPage(wisataId: '',),
     PengaduanPage(),
   ];
 
