@@ -92,13 +92,6 @@ import 'package:get/get.dart';
                                 color: Colors.black,
                               ),
                             ),
-                            //suffixIcon: IconButton(
-                              //onPressed: () {},
-                              //icon: const Icon(
-                                //Icons.filter_alt_outlined,
-                                //color: Colors.grey,
-                              //),
-                            //),
                             hintStyle: GoogleFonts.ubuntu(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,

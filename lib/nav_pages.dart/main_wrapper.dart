@@ -19,7 +19,7 @@ class _MainWrapperState extends State<MainWrapper> {
   List<Widget> pages = const [
     HomePage(),
     WisataPage(),
-    EventPage(),
+    EventPage(wisataId: '',),
     PengaduanPage(),
   ];
 
