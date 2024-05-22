@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-class PengaduanPage extends StatefulWidget {
-  const PengaduanPage({super.key});
+
+class MasukanPage extends StatefulWidget {
+  const MasukanPage({super.key});
   @override
-  _PengaduanPageState createState() => _PengaduanPageState();
+  _MasukanPageState createState() => _MasukanPageState();
 }
 
-class _PengaduanPageState extends State<PengaduanPage> with SingleTickerProviderStateMixin {
+class _MasukanPageState extends State<MasukanPage> with SingleTickerProviderStateMixin {
   TextEditingController _namaController = TextEditingController();
-  TextEditingController _kontakController = TextEditingController();
-  TextEditingController _pengaduanController = TextEditingController();
+  TextEditingController _masukanController = TextEditingController();
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -41,7 +41,9 @@ class _PengaduanPageState extends State<PengaduanPage> with SingleTickerProvider
     return Scaffold(
       appBar: AppBar(
         title: Text('Form Masukan'),
+        foregroundColor: Colors.white,
         backgroundColor: Colors.deepPurpleAccent,
+        leading: Container(), // Remove the back button
       ),
       body: SingleChildScrollView(
         child: FadeTransition(
@@ -96,29 +98,10 @@ class _PengaduanPageState extends State<PengaduanPage> with SingleTickerProvider
                 ),
                 SizedBox(height: 20.0),
                 TextField(
-                  controller: _kontakController,
-                  decoration: InputDecoration(
-                    labelText: 'Kontak',
-                    prefixIcon: Icon(Icons.phone),
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.deepPurpleAccent, width: 2.0),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                TextField(
-                  controller: _pengaduanController,
+                  controller: _masukanController,
                   maxLines: 5,
                   decoration: InputDecoration(
-                    labelText: 'Pengaduan',
+                    labelText: 'Masukan',
                     prefixIcon: Icon(Icons.feedback),
                     border: OutlineInputBorder(),
                     filled: true,
@@ -137,13 +120,11 @@ class _PengaduanPageState extends State<PengaduanPage> with SingleTickerProvider
                 SizedBox(height: 30.0),
                 ElevatedButton(
                   onPressed: () {
-                    // Logika untuk mengirim pengaduan
+                    // Logika untuk mengirim masukan
                     String nama = _namaController.text;
-                    String kontak = _kontakController.text;
-                    String pengaduan = _pengaduanController.text;
-
-                    // Di sini dapat ditambahkan logika untuk mengirim pengaduan
-                    print('Nama: $nama, Kontak: $kontak, Pengaduan: $pengaduan');
+                    String masukan = _masukanController.text;
+                    // Di sini dapat ditambahkan logika untuk mengirim masukan
+                    print('Nama: $nama, Masukan: $masukan');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent, // Warna latar belakang

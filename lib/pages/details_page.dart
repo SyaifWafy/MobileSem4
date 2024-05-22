@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
- 
+
 import '../models/people_also_like_model.dart';
 import '../models/tab_bar_model.dart';
 import '../widget/reuseable_text.dart';
@@ -99,12 +99,18 @@ class _DetailsPageState extends State<DetailsPage> {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w500,
                                   ),
+                                  AppText(
+                                    text: current.kategori,
+                                    size: 24,
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                   Row(
                                     children: [
                                       const Icon(
                                         Icons.location_on,
                                         color: Colors.black54,
-                                        size: 15,
+                                        size: 20,
                                       ),
                                       SizedBox(
                                         width: size.width * 0.01,
@@ -117,6 +123,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(height: size.height * 0.01),
                                 ],
                               ),
                               //price
@@ -131,22 +138,8 @@ class _DetailsPageState extends State<DetailsPage> {
                         delay: const Duration(milliseconds: 300),
                         child: Row(
                           children: [
-                            Wrap(
-                              children: List.generate(5, (index) {
-                                return Icon(
-                                  index < 4 ? Icons.star : Icons.star_border,
-                                  color: index < 4 ? Colors.amber : Colors.grey,
-                                );
-                              }),
-                            ),
                             SizedBox(
                               width: size.width * 0.01,
-                            ),
-                            const AppText(
-                              text: "(4.0)",
-                              size: 15,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w400,
                             ),
                           ],
                         ),
@@ -155,7 +148,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       FadeInUp(
                         delay: const Duration(milliseconds: 800),
                         child: const AppText(
-                          text: "Deskripsi",
+                          text: "Keterangan",
                           size: 21,
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -179,36 +172,6 @@ class _DetailsPageState extends State<DetailsPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
-                                  width: size.width * 0.14,
-                                  height: size.height * 0.06,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Colors.deepPurpleAccent,
-                                          width: 2),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.deepPurpleAccent,
-                                    ),
-                                  )),
-                              MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                minWidth: size.width * 0.6,
-                                height: size.height * 0.06,
-                                color: Colors.deepPurpleAccent,
-                                onPressed: () {},
-                                child: const AppText(
-                                  text: "Kunjungi",
-                                  size: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
                             ],
                           ),
                         ),
