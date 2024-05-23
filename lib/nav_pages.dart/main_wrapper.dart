@@ -4,7 +4,7 @@ import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 import '../pages/home_page.dart';
 import '../pages/wisata.dart';
 import '../pages/event.dart';
-import '../pages/pengaduan.dart';
+import '../pages/masukan.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -20,7 +20,7 @@ class _MainWrapperState extends State<MainWrapper> {
     HomePage(),
     WisataPage(),
     EventPage(wisataId: '',),
-    PengaduanPage(),
+    MasukanPage(),
   ];
 
   @override

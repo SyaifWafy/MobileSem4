@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projekmobile_sem4/authentication/login_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
+class LupaPassword extends StatefulWidget {
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LupaPassword> createState() => _LupaPasswordState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LupaPasswordState extends State<LupaPassword> {
   var formKey = GlobalKey<FormState>();
   var usernameController = TextEditingController();
-  var passwordController = TextEditingController();
-  var fullnameController = TextEditingController();
+  var passwordBaruController = TextEditingController();
+  var konfirmasiPasswordBaruController = TextEditingController();
   var jawabanController = TextEditingController();
   var isObsecure = true.obs;
   var selectedPertanyaan = ''.obs;
@@ -107,115 +107,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Obx(() => TextFormField(
-                                        controller: passwordController,
-                                        obscureText: isObsecure.value,
-                                        validator: (val) => val == ""
-                                            ? "Please write pasword"
-                                            : null,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                            Icons.vpn_key_sharp,
-                                            color: Colors.black,
-                                          ),
-                                          suffixIcon: Obx(() => GestureDetector(
-                                                onTap: () {
-                                                  isObsecure.value =
-                                                      !isObsecure.value;
-                                                },
-                                                child: Icon(
-                                                  isObsecure.value
-                                                      ? Icons.visibility_off
-                                                      : Icons.visibility,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          hintText: "pasword...",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 14,
-                                            vertical: 6,
-                                          ),
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                        ),
-                                      )),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
-                                  TextFormField(
-                                    controller: fullnameController,
-                                    validator: (val) => val == ""
-                                        ? "Please write fullname"
-                                        : null,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(
-                                        Icons.article,
-                                        color: Colors.black,
-                                      ),
-                                      hintText: "fullname...",
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 14,
-                                        vertical: 6,
-                                      ),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
                                   Obx(() => DropdownButtonFormField<String>(
                                         value: selectedPertanyaan.value.isEmpty
                                             ? null
@@ -258,6 +149,135 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           ),
                                           disabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 6,
+                                          ),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                        ),
+                                      )),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  Obx(() => TextFormField(
+                                        controller: passwordBaruController,
+                                        obscureText: isObsecure.value,
+                                        validator: (val) => val == ""
+                                            ? "Please write password baru"
+                                            : null,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(
+                                            Icons.vpn_key_sharp,
+                                            color: Colors.black,
+                                          ),
+                                          suffixIcon: Obx(() => GestureDetector(
+                                                onTap: () {
+                                                  isObsecure.value =
+                                                      !isObsecure.value;
+                                                },
+                                                child: Icon(
+                                                  isObsecure.value
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          hintText: "password baru...",
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          disabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 6,
+                                          ),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                        ),
+                                      )),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
+                                  Obx(() => TextFormField(
+                                        controller:
+                                            konfirmasiPasswordBaruController,
+                                        obscureText: isObsecure.value,
+                                        validator: (val) => val == ""
+                                            ? "Please confirm password baru"
+                                            : val != passwordBaruController.text
+                                                ? "Passwords do not match"
+                                                : null,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(
+                                            Icons.vpn_key_sharp,
+                                            color: Colors.black,
+                                          ),
+                                          suffixIcon: Obx(() => GestureDetector(
+                                                onTap: () {
+                                                  isObsecure.value =
+                                                      !isObsecure.value;
+                                                },
+                                                child: Icon(
+                                                  isObsecure.value
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          hintText: "konfirmasi password baru...",
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
+                                          ),
+                                          disabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                             borderSide: const BorderSide(
                                               color: Colors.white60,
                                             ),
@@ -335,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           horizontal: 28,
                                         ),
                                         child: Text(
-                                          "Daftar",
+                                          "Submit",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
