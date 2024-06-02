@@ -18,18 +18,14 @@ class _EventPageState extends State<EventPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.wisataId.isNotEmpty) {
-      futureEvents = ApiService().fetchEvents(widget.wisataId);
-    } else {
-      futureEvents = Future.error('Wisata ID is empty');
-    }
+    futureEvents = ApiService().fetchEvent();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(), // Remove the back button
+        leading: Container(),
         title: const Text('Events'),
       ),
       body: FutureBuilder<List<Event>>(

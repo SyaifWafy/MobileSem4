@@ -8,7 +8,7 @@ class ApiService {
 
   Future<List<Wisata>> fetchTempatWisata() async {
   try {
-    final response = await http.get(Uri.parse('http://172.26.189.216/Mobile%20API/readwisata.php'));
+    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/readwisata.php'));
     if (response.statusCode == 200) {
       final dynamic jsonResponse = json.decode(response.body);
       print(jsonResponse);
@@ -28,18 +28,25 @@ class ApiService {
   }
 }
 
-  Future<List<Event>> fetchEvents(String wisataId) async {
-    try {
-      final response = await http.get(Uri.parse('http://172.26.189.216/Mobile%20API/readevent.php'));
-
-      if (response.statusCode == 200) {
-        List jsonResponse = json.decode(response.body);
-        return jsonResponse.map((data) => Event.fromJson(data)).toList();
+  Future<List<Event>> fetchEvent() async {
+  try {
+    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/readevent.php'));
+    if (response.statusCode == 200) {
+      final dynamic jsonResponse = json.decode(response.body);
+      print(jsonResponse);
+      if (jsonResponse is List) {
+        return jsonResponse.map((item) => Event.fromJson(item)).toList();
+      } else if (jsonResponse is Map && jsonResponse.containsKey('data')) {
+        final List<dynamic> data = jsonResponse['data'];
+        return data.map((item) => Event.fromJson(item)).toList();
       } else {
-        throw Exception('Failed to load data. Status code: ${response.statusCode}');
+        throw Exception('Unexpected response structure');
       }
-    } catch (e) {
-      throw Exception('Failed to load data. Error: $e');
+    } else {
+      throw Exception('Failed to load data. Status code: ${response.statusCode}');
     }
+  } catch (e) {
+    throw Exception('Failed to load data. Error: $e');
   }
+}
 }

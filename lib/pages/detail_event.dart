@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/event_model.dart';
+import '../models/wisata_model.dart';
 
 class DetailEventPage extends StatelessWidget {
   final Event event;
@@ -35,11 +36,29 @@ class DetailEventPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
+                    event.kd_wisata,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
                     event.tempat,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    event.tanggal,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    event.pukul,
+                    style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
                   Text(
