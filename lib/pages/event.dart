@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
-import '../models/event.dart';
+import '../models/event_model.dart';
 import 'detail_event.dart';
 
 class EventPage extends StatefulWidget {
@@ -73,7 +73,7 @@ class _EventPageState extends State<EventPage> {
                               topRight: Radius.circular(10),
                             ),
                             child: Image.network(
-                              event.gambar,
+                              event.gambarevent,
                               width: double.infinity,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
@@ -87,8 +87,8 @@ class _EventPageState extends State<EventPage> {
                           ),
                         ),
                         ListTile(
-                          title: Text(event.nama),
-                          subtitle: Text(event.lokasi),
+                          title: Text(event.judul),
+                          subtitle: Text(event.tempat),
                         ),
                       ],
                     ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
-import '../models/tempat_wisata.dart';
-import 'detail_pages.dart';
+import '../models/wisata_model.dart';
+import 'detail_wisata.dart';
 
 class WisataPage extends StatefulWidget {
   const WisataPage({Key? key}) : super(key: key);
@@ -11,23 +11,23 @@ class WisataPage extends StatefulWidget {
 }
 
 class _WisataPageState extends State<WisataPage> {
-  late Future<List<TempatWisata>> futureTempatWisata;
+  late Future<List<Wisata>> futurewisata;
 
   @override
   void initState() {
     super.initState();
-    futureTempatWisata = ApiService().fetchTempatWisata();
+    futurewisata = ApiService().fetchTempatWisata();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(), // Remove the back button
+        leading: Container(),
         title: const Text('Wisata'),
       ),
-      body: FutureBuilder<List<TempatWisata>>(
-        future: futureTempatWisata,
+      body: FutureBuilder<List<Wisata>>(
+        future: futurewisata,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -67,7 +67,7 @@ class _WisataPageState extends State<WisataPage> {
                               topRight: Radius.circular(10),
                             ),
                             child: Image.network(
-                              tempatWisata.gambar,
+                              tempatWisata.gambarwisata,
                               width: double.infinity,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
@@ -81,7 +81,7 @@ class _WisataPageState extends State<WisataPage> {
                           ),
                         ),
                         ListTile(
-                          title: Text(tempatWisata.nama),
+                          title: Text(tempatWisata.nama_wisata),
                           subtitle: Text(tempatWisata.lokasi),
                         ),
                       ],

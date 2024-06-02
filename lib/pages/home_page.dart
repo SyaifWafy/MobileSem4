@@ -372,14 +372,14 @@ class TabViewChild extends StatelessWidget {
                       size: 12,
                       color: Colors.white,
                       fontWeight: FontWeight.w400,
-                 ),
+                  ),
                   ],
                 ),
               ),
             ],
           ),
         );
-     },
+      },
 );
 }
 }

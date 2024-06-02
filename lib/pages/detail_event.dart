@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/event.dart';
+import '../models/event_model.dart';
 
 class DetailEventPage extends StatelessWidget {
   final Event event;
@@ -10,14 +10,14 @@ class DetailEventPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.nama),
+        title: Text(event.judul),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Image.network(
-              event.gambar,
+              event.gambarevent,
               height: 300,
               fit: BoxFit.cover,
             ),
@@ -27,7 +27,7 @@ class DetailEventPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    event.nama,
+                    event.judul,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class DetailEventPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    event.lokasi,
+                    event.tempat,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -43,7 +43,7 @@ class DetailEventPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    event.deskripsi,
+                    event.isi,
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

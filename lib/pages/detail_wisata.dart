@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/tempat_wisata.dart';
+import '../models/wisata_model.dart';
 
 class DetailPage extends StatelessWidget {
-  final TempatWisata tempatWisata;
+  final Wisata tempatWisata;
 
   DetailPage({required this.tempatWisata});
 
@@ -10,14 +10,14 @@ class DetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(tempatWisata.nama),
+        title: Text(tempatWisata.nama_wisata),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              tempatWisata.gambar,
+              tempatWisata.gambarwisata,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -28,8 +28,13 @@ class DetailPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    tempatWisata.nama,
+                    tempatWisata.nama_wisata,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    tempatWisata.kategori,
+                    style: TextStyle(fontSize: 19, color: Colors.grey),
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -38,7 +43,7 @@ class DetailPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    tempatWisata.deskripsi,
+                    tempatWisata.keterangan,
                     style: TextStyle(fontSize: 16),
                   ),
                   // Tambahkan bagian event terkait di sini jika ada
