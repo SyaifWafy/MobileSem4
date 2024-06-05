@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../services/api_service.dart';
 
 class MasukanPage extends StatefulWidget {
   const MasukanPage({super.key});
+
   @override
   _MasukanPageState createState() => _MasukanPageState();
 }
@@ -13,6 +16,7 @@ class _MasukanPageState extends State<MasukanPage> with SingleTickerProviderStat
 
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
+  final ApiService apiService = ApiService();
 
   @override
   void initState() {
@@ -34,6 +38,37 @@ class _MasukanPageState extends State<MasukanPage> with SingleTickerProviderStat
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> _submitMasukan() async {
+    String nama = _namaController.text;
+    String masukan = _masukanController.text;
+
+    if (nama.isEmpty || masukan.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Nama dan Masukan harus diisi'),
+        ),
+      );
+      return;
+    }
+
+    try {
+      final response = await apiService.submitMasukan(nama, masukan);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Masukan berhasil dikirim'),
+        ),
+      );
+      _namaController.clear();
+      _masukanController.clear();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Gagal mengirim masukan: $e'),
+        ),
+      );
+    }
   }
 
   @override
@@ -119,13 +154,7 @@ class _MasukanPageState extends State<MasukanPage> with SingleTickerProviderStat
                 ),
                 SizedBox(height: 30.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Logika untuk mengirim masukan
-                    String nama = _namaController.text;
-                    String masukan = _masukanController.text;
-                    // Di sini dapat ditambahkan logika untuk mengirim masukan
-                    print('Nama: $nama, Masukan: $masukan');
-                  },
+                  onPressed: _submitMasukan,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent, // Warna latar belakang
                     padding: EdgeInsets.symmetric(vertical: 16.0), // Padding tombol
