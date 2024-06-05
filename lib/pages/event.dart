@@ -83,8 +83,26 @@ class _EventPageState extends State<EventPage> {
                           ),
                         ),
                         ListTile(
-                          title: Text(event.judul),
-                          subtitle: Text(event.tempat),
+                          title: Text(
+                            event.judul,
+                            overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                          ),
+                          subtitle: Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                color: Colors.deepPurpleAccent,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded(
+                                child: Text(
+                                  event.tempat,
+                                  overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
