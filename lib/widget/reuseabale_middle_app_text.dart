@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Import GetX untuk navigasi
-
+import 'package:get/get.dart';
 import 'reuseable_text.dart';
 
 class MiddleAppText extends StatelessWidget {
   const MiddleAppText({
     Key? key,
     required this.text,
+    required this.routeName,
   }) : super(key: key);
 
   final String text;
+  final String routeName;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class MiddleAppText extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Get.toNamed('/wisata');
+              Get.toNamed(routeName);
             },
             child: const AppText(
               text: "Selengkapnya",

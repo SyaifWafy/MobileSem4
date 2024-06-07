@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../models/people_also_like_model.dart';
 import '../nav_pages.dart/main_wrapper.dart';
-import '../pages/details_page.dart';
 import '../widget/reuseable_text.dart';
 import '../models/tab_bar_model.dart';
-import '../widget/painter.dart';
 import '../widget/reuseabale_middle_app_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,7 +69,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   FadeInUp(
                       delay: const Duration(milliseconds: 1000),
-                      child: const MiddleAppText(text: "Wisata")),
+                      child: const MiddleAppText(
+                          text: "Wisata", routeName: '/wisata')),
                   FadeInUp(
                     delay: const Duration(milliseconds: 600),
                     child: Container(
@@ -100,7 +99,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   FadeInUp(
                       delay: const Duration(milliseconds: 1000),
-                      child: const MiddleAppText(text: "Event")),
+                      child: const MiddleAppText(
+                          text: "Event", routeName: '/event')),
                   FadeInUp(
                     delay: const Duration(milliseconds: 1100),
                     child: Container(
@@ -133,17 +133,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: Container(), // Remove the back button
+          leading: Container(), // Menghapus tombol kembali
           actions: [
             Padding(
               padding: const EdgeInsets.only(
                 right: 5,
               ),
               child: GestureDetector(
-                onTap: (() => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const MainWrapper()))),
+                onTap: () => Get.off(() => const MainWrapper()),
                 child: ClipOval(
                   child: Image.asset(
                     "assets/images/jw.png",
