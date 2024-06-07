@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../models/people_also_like_model.dart';
 import '../nav_pages.dart/main_wrapper.dart';
 import '../pages/details_page.dart';
@@ -71,42 +70,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                   ),
                   FadeInUp(
-                    delay: const Duration(milliseconds: 500),
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: size.height * 0.01, top: size.height * 0.02),
-                      child: TextField(
-                        style: GoogleFonts.ubuntu(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 20),
-                          filled: true,
-                          fillColor: const Color.fromARGB(255, 240, 240, 240),
-                          prefixIcon: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.search,
-                              color: Colors.black,
-                            ),
-                          ),
-                          hintStyle: GoogleFonts.ubuntu(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey,
-                          ),
-                          hintText: "Cari",
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                      delay: const Duration(milliseconds: 1000),
+                      child: const MiddleAppText(text: "Wisata")),
                   FadeInUp(
                     delay: const Duration(milliseconds: 600),
                     child: Container(
@@ -141,96 +106,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     child: Container(
                       margin: EdgeInsets.only(top: size.height * 0.01),
                       width: size.width,
-                      height: size.height * 0.68,
-                      child: ListView.builder(
-                          itemCount: peopleAlsoLikeModel.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            PeopleAlsoLikeModel current =
-                                peopleAlsoLikeModel[index];
-                            return GestureDetector(
-                              onTap: () => Get.to(
-                                () => DetailsPage(
-                                  personData: current,
-                                  tabData: null,
-                                  isCameFromPersonSection: true,
-                                ),
-                              ),
-                              child: Container(
-                                margin: const EdgeInsets.all(8.0),
-                                width: size.width,
-                                height: size.height * 0.15,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Hero(
-                                      tag: current.day,
-                                      child: Container(
-                                        margin: const EdgeInsets.all(8.0),
-                                        width: size.width * 0.28,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                              current.image,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: size.width * 0.02),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: size.height * 0.035,
-                                          ),
-                                          AppText(
-                                            text: current.title,
-                                            size: 17,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                          SizedBox(
-                                            height: size.height * 0.005,
-                                          ),
-                                          AppText(
-                                            text: current.location,
-                                            size: 14,
-                                            color:
-                                                Colors.black.withOpacity(0.5),
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: size.height * 0.015),
-                                            child: AppText(
-                                              text: "${current.day} Day",
-                                              size: 14,
-                                              color:
-                                                  Colors.black.withOpacity(0.5),
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          }),
+                      height: size.height * 0.4,
+                      child: TabViewChild(
+                        list: peopleAlsoLikeModel.map((model) => TabBarModel(
+                          image: model.image,
+                          title: model.title,
+                          location: model.location,
+                        )).toList(),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -292,94 +177,82 @@ class TabViewChild extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         TabBarModel current = list[index];
-        return GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailsPage(
-                personData: null,
-                tabData: current,
-                isCameFromPersonSection: false,
+        return Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            Hero(
+              tag: current.image,
+              child: Container(
+                margin: const EdgeInsets.all(10.0),
+                width: size.width * 0.6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                    image: AssetImage(current.image),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
-          ),
-          child: Stack(
-            alignment: Alignment.bottomLeft,
-            children: [
-              Hero(
-                tag: current.image,
-                child: Container(
-                  margin: const EdgeInsets.all(10.0),
-                  width: size.width * 0.6,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: DecorationImage(
-                      image: AssetImage(current.image),
-                      fit: BoxFit.cover,
-                    ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: size.height * 0.2,
+              child: Container(
+                margin: const EdgeInsets.all(10.0),
+                width: size.width * 0.53,
+                height: size.height * 0.2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color.fromARGB(153, 0, 0, 0),
+                      Color.fromARGB(118, 29, 29, 29),
+                      Color.fromARGB(54, 0, 0, 0),
+                      Color.fromARGB(0, 0, 0, 0),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                top: size.height * 0.2,
-                child: Container(
-                  margin: const EdgeInsets.all(10.0),
-                  width: size.width * 0.53,
-                  height: size.height * 0.2,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color.fromARGB(153, 0, 0, 0),
-                        Color.fromARGB(118, 29, 29, 29),
-                        Color.fromARGB(54, 0, 0, 0),
-                        Color.fromARGB(0, 0, 0, 0),
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    ),
+            ),
+            Positioned(
+              left: size.width * 0.07,
+              bottom: size.height * 0.045,
+              child: AppText(
+                text: current.title,
+                size: 15,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            Positioned(
+              left: size.width * 0.07,
+              bottom: size.height * 0.025,
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.location_on,
+                    color: Colors.white,
+                    size: 15,
                   ),
-                ),
-              ),
-              Positioned(
-                left: size.width * 0.07,
-                bottom: size.height * 0.045,
-                child: AppText(
-                  text: current.title,
-                  size: 15,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              Positioned(
-                left: size.width * 0.07,
-                bottom: size.height * 0.025,
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.white,
-                      size: 15,
-                    ),
-                    SizedBox(
-                      width: size.width * 0.01,
-                    ),
-                    AppText(
-                      text: current.location,
-                      size: 12,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
+                  SizedBox(
+                    width: size.width * 0.01,
                   ),
-                  ],
-                ),
+                  AppText(
+                    text: current.location,
+                    size: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
-);
-}
+    );
+  }
 }

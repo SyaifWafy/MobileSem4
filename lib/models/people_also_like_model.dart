@@ -4,13 +4,15 @@
     final int day;
     final String image;
     final int price;
+    final String kategori;
 
     PeopleAlsoLikeModel({
       required this.title,
       required this.location,
       required this.day,
       required this.image,
-      required this.price
+      required this.price,
+      required this.kategori
     });
   }
 
@@ -19,20 +21,18 @@
         title: "Jember Fashion Carnaval",
         location: "Alun-Alun Jember",
         image: "assets/images/carnaval.jpg",
-        day: 5, price: 430),
+        day: 5, price: 430, 
+        kategori: "Festival"),
     PeopleAlsoLikeModel(
         title: "Jember Fashion Carnaval",
         location: "Alun-Alun Jember",
         image: "assets/images/carnaval.jpg",
-        day: 7, price: 233),
+        day: 7, price: 233,
+        kategori: "Festival"),
     PeopleAlsoLikeModel(
         title: "Jember Fashion Carnaval",
         location: "Alun-Alun Jember",
         image: "assets/images/carnaval.jpg",
-        day: 9, price: 550),
-    PeopleAlsoLikeModel(
-        title: "Jember Fashion Carnaval",
-        location: "Alun-Alun Jember",
-        image:"assets/images/carnaval.jpg",
-        day: 3, price: 546),
+        day: 9, price: 550,
+        kategori: "Festival"),
   ];

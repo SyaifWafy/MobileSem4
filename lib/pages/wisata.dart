@@ -82,7 +82,22 @@ class _WisataPageState extends State<WisataPage> {
                         ),
                         ListTile(
                           title: Text(tempatWisata.nama_wisata),
-                          subtitle: Text(tempatWisata.lokasi),
+                          subtitle: Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on,
+                                color: Colors.deepPurpleAccent,
+                                size: 15,
+                              ),
+                              SizedBox(width: 5),
+                              Expanded( // Gunakan Expanded di sekitar Text widget
+                                child: Text(
+                                  tempatWisata.lokasi,
+                                  overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

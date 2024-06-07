@@ -10,7 +10,7 @@ class DetailsPage extends StatefulWidget {
     super.key,
     required this.tabData,
     required this.personData,
-    required this.isCameFromPersonSection,
+    required this.isCameFromPersonSection, required TabBarModel model,
   });
 
   final TabBarModel? tabData;
