@@ -8,7 +8,7 @@ class ApiService {
 
   Future<List<Wisata>> fetchTempatWisata() async {
   try {
-    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/readwisata.php'));
+    final response = await http.get(Uri.parse('http://192.168.100.9/MobileSem4/lib/API/readwisata.php'));
     if (response.statusCode == 200) {
       final dynamic jsonResponse = json.decode(response.body);
       print(jsonResponse);
@@ -30,7 +30,7 @@ class ApiService {
 
   Future<List<Event>> fetchEvent() async {
   try {
-    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/readevent.php'));
+    final response = await http.get(Uri.parse('http://192.168.159.174/MobileSem4/lib/API/readevent.php'));
     if (response.statusCode == 200) {
       final dynamic jsonResponse = json.decode(response.body);
       print(jsonResponse);

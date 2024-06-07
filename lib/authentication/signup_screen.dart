@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projekmobile_sem4/authentication/login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -23,6 +25,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
     'Apa Warna Favoritmu?',
     'Dimana Kota Kelahiranmu?'
   ];
+
+  Future<void> signUp() async {
+    if (formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse('http://192.168.100.9/API/register.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username_cus': usernameController.text,
+          'pw_cus': passwordController.text,
+          'fullname_cus': fullnameController.text,
+          'pertanyaan': selectedPertanyaan.value,
+          'jawaban': jawabanController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['message'] == 'Registration successful') {
+          // Handle success (e.g., navigate to login screen)
+          Get.to(LoginScreen());
+        } else {
+          // Handle failure
+          Get.snackbar("Error", responseData['message']);
+        }
+      } else {
+        // Handle error
+        Get.snackbar("Error", "Failed to register. Please try again.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         controller: passwordController,
                                         obscureText: isObsecure.value,
                                         validator: (val) => val == ""
-                                            ? "Please write pasword"
+                                            ? "Please write password"
                                             : null,
                                         decoration: InputDecoration(
                                           prefixIcon: const Icon(
@@ -130,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   color: Colors.black,
                                                 ),
                                               )),
-                                          hintText: "pasword...",
+                                          hintText: "password...",
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(30),
@@ -323,11 +357,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),
                                     child: InkWell(
-                                      onTap: () {
-                                        if (formKey.currentState!.validate()) {
-                                          // Backend logic commented out
-                                        }
-                                      },
+                                      onTap: signUp,
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
                                         padding: EdgeInsets.symmetric(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projekmobile_sem4/authentication/login_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LupaPassword extends StatefulWidget {
   @override
@@ -23,6 +25,37 @@ class _LupaPasswordState extends State<LupaPassword> {
     'Apa Warna Favoritmu?',
     'Dimana Kota Kelahiranmu?'
   ];
+
+  Future<void> resetPassword() async {
+    if (formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse('http://192.168.100.9/API/reset_password.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username': usernameController.text,
+          'password_baru': passwordBaruController.text,
+          'pertanyaan': selectedPertanyaan.value,
+          'jawaban': jawabanController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['message'] == 'Password reset successful') {
+          // Handle success (e.g., navigate to login page)
+          Get.to(LoginScreen());
+        } else {
+          // Handle failure
+          Get.snackbar("Error", responseData['message']);
+        }
+      } else {
+        // Handle error
+        Get.snackbar("Error", "Failed to reset password. Please try again.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,25 +106,29 @@ class _LupaPasswordState extends State<LupaPassword> {
                                       ),
                                       hintText: "username...",
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
@@ -107,197 +144,218 @@ class _LupaPasswordState extends State<LupaPassword> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Obx(() => DropdownButtonFormField<String>(
-                                        value: selectedPertanyaan.value.isEmpty
-                                            ? null
-                                            : selectedPertanyaan.value,
-                                        onChanged: (newValue) {
-                                          selectedPertanyaan.value = newValue!;
-                                        },
-                                        validator: (val) => val == null || val.isEmpty
-                                            ? "Please select a question"
-                                            : null,
-                                        items: pertanyaanList
-                                            .map((question) => DropdownMenuItem<String>(
-                                                  value: question,
-                                                  child: Text(question),
-                                                ))
-                                            .toList(),
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                            Icons.question_mark,
-                                            color: Colors.black,
-                                          ),
-                                          hintText: "Select a question...",
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
+                                  Obx(
+                                    () => DropdownButtonFormField<String>(
+                                      value: selectedPertanyaan.value.isEmpty
+                                          ? null
+                                          : selectedPertanyaan.value,
+                                      onChanged: (newValue) {
+                                        selectedPertanyaan.value = newValue!;
+                                      },
+                                      validator: (val) =>
+                                          val == null || val.isEmpty
+                                              ? "Please select a question"
+                                              : null,
+                                      items: pertanyaanList
+                                          .map(
+                                            (question) =>
+                                                DropdownMenuItem<String>(
+                                              value: question,
+                                              child: Text(question),
                                             ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 14,
-                                            vertical: 6,
-                                          ),
-                                          fillColor: Colors.white,
-                                          filled: true,
+                                          )
+                                          .toList(),
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.question_mark,
+                                          color: Colors.black,
                                         ),
-                                      )),
+                                        hintText: "Select a question...",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 14,
+                                          vertical: 6,
+                                        ),
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Obx(() => TextFormField(
-                                        controller: passwordBaruController,
-                                        obscureText: isObsecure.value,
-                                        validator: (val) => val == ""
-                                            ? "Please write password baru"
-                                            : null,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                            Icons.vpn_key_sharp,
-                                            color: Colors.black,
-                                          ),
-                                          suffixIcon: Obx(() => GestureDetector(
-                                                onTap: () {
-                                                  isObsecure.value =
-                                                      !isObsecure.value;
-                                                },
-                                                child: Icon(
-                                                  isObsecure.value
-                                                      ? Icons.visibility_off
-                                                      : Icons.visibility,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          hintText: "password baru...",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 14,
-                                            vertical: 6,
-                                          ),
-                                          fillColor: Colors.white,
-                                          filled: true,
+                                  Obx(
+                                    () => TextFormField(
+                                      controller: passwordBaruController,
+                                      obscureText: isObsecure.value,
+                                      validator: (val) =>
+                                          val == ""
+                                              ? "Please write password baru"
+                                              : null,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.vpn_key_sharp,
+                                          color: Colors.black,
                                         ),
-                                      )),
+                                        suffixIcon: Obx(
+                                          () => GestureDetector(
+                                            onTap: () {
+                                              isObsecure.value =
+                                                  !isObsecure.value;
+                                            },
+                                            child: Icon(
+                                              isObsecure.value
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        hintText: "password baru...",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 14,
+                                          vertical: 6,
+                                        ),
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Obx(() => TextFormField(
-                                        controller:
-                                            konfirmasiPasswordBaruController,
-                                        obscureText: isObsecure.value,
-                                        validator: (val) => val == ""
-                                            ? "Please confirm password baru"
-                                            : val != passwordBaruController.text
-                                                ? "Passwords do not match"
-                                                : null,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                            Icons.vpn_key_sharp,
-                                            color: Colors.black,
-                                          ),
-                                          suffixIcon: Obx(() => GestureDetector(
-                                                onTap: () {
-                                                  isObsecure.value =
-                                                      !isObsecure.value;
-                                                },
-                                                child: Icon(
-                                                  isObsecure.value
-                                                      ? Icons.visibility_off
-                                                      : Icons.visibility,
-                                                  color: Colors.black,
-                                                ),
-                                              )),
-                                          hintText: "konfirmasi password baru...",
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            borderSide: const BorderSide(
-                                              color: Colors.white60,
-                                            ),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 14,
-                                            vertical: 6,
-                                          ),
-                                          fillColor: Colors.white,
-                                          filled: true,
+                                  Obx(
+                                    () => TextFormField(
+                                      controller:
+                                          konfirmasiPasswordBaruController,
+                                      obscureText: isObsecure.value,
+                                      validator: (val) => val == ""
+                                          ? "Please confirm password baru"
+                                          : val != passwordBaruController.text
+                                              ? "Passwords do not match"
+                                              : null,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                          Icons.vpn_key_sharp,
+                                          color: Colors.black,
                                         ),
-                                      )),
+                                        suffixIcon: Obx(
+                                          () => GestureDetector(
+                                            onTap: () {
+                                              isObsecure.value =
+                                                  !isObsecure.value;
+                                            },
+                                            child: Icon(
+                                              isObsecure.value
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                        hintText:
+                                            "konfirmasi password baru...",
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          borderSide: const BorderSide(
+                                            color: Colors.white60,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 14,
+                                          vertical: 6,
+                                        ),
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
                                   const SizedBox(
                                     height: 18,
                                   ),
                                   TextFormField(
                                     controller: jawabanController,
-                                    validator: (val) => val == ""
-                                        ? "Please write jawaban"
-                                        : null,
+                                    validator: (val) =>
+                                        val == ""
+                                            ? "Please write jawaban"
+                                            : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.question_answer_sharp,
@@ -305,25 +363,29 @@ class _LupaPasswordState extends State<LupaPassword> {
                                       ),
                                       hintText: "jawaban...",
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
                                       ),
                                       disabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
+                                        borderRadius:
+                                            BorderRadius.circular(30),
                                         borderSide: const BorderSide(
                                           color: Colors.white60,
                                         ),
@@ -343,11 +405,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),
                                     child: InkWell(
-                                      onTap: () {
-                                        if (formKey.currentState!.validate()) {
-                                          // Backend logic commented out
-                                        }
-                                      },
+                                      onTap: resetPassword,
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
                                         padding: EdgeInsets.symmetric(

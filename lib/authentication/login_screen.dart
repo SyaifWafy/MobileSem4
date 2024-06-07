@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:projekmobile_sem4/authentication/lupa_password.dart';
 import 'package:projekmobile_sem4/pages/home_page.dart';
 import 'signup_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,8 +17,33 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
 
-  loginUserNow() async {
-    // Backend logic commented out
+  Future<void> login() async {
+    if (formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse('http://192.168.100.9/API/login.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username': usernameController.text,
+          'password': passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['message'] == 'Login successful') {
+          // Handle success (e.g., navigate to home page)
+          Get.to(HomePage());
+        } else {
+          // Handle failure
+          Get.snackbar("Error", responseData['message']);
+        }
+      } else {
+        // Handle error
+        Get.snackbar("Error", "Failed to login. Please try again.");
+      }
+    }
   }
 
   @override
@@ -65,8 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   TextFormField(
                                     controller: usernameController,
-                                    validator: (val) =>
-                                        val == "" ? "Please write email" : null,
+                                    validator: (val) => val == ""
+                                        ? "Please write username"
+                                        : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.account_circle_sharp,
@@ -108,70 +136,66 @@ class _LoginScreenState extends State<LoginScreen> {
                                   const SizedBox(
                                     height: 18,
                                   ),
-                                  Obx(
-                                    () => TextFormField(
-                                      controller: passwordController,
-                                      obscureText: isObsecure.value,
-                                      validator: (val) => val == ""
-                                          ? "Please write pasword"
-                                          : null,
-                                      decoration: InputDecoration(
-                                        prefixIcon: const Icon(
-                                          Icons.vpn_key_sharp,
-                                          color: Colors.black,
-                                        ),
-                                        suffixIcon: Obx(
-                                          () => GestureDetector(
-                                            onTap: () {
-                                              isObsecure.value =
-                                                  !isObsecure.value;
-                                            },
-                                            child: Icon(
-                                              isObsecure.value
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                              color: Colors.black,
+                                  Obx(() => TextFormField(
+                                        controller: passwordController,
+                                        obscureText: isObsecure.value,
+                                        validator: (val) => val == ""
+                                            ? "Please write password"
+                                            : null,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(
+                                            Icons.vpn_key_sharp,
+                                            color: Colors.black,
+                                          ),
+                                          suffixIcon: Obx(() => GestureDetector(
+                                                onTap: () {
+                                                  isObsecure.value =
+                                                      !isObsecure.value;
+                                                },
+                                                child: Icon(
+                                                  isObsecure.value
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility,
+                                                  color: Colors.black,
+                                                ),
+                                              )),
+                                          hintText: "password...",
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
                                             ),
                                           ),
-                                        ),
-                                        hintText: "pasword...",
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: const BorderSide(
-                                            color: Colors.white60,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
                                           ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: const BorderSide(
-                                            color: Colors.white60,
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
                                           ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: const BorderSide(
-                                            color: Colors.white60,
+                                          disabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white60,
+                                            ),
                                           ),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: const BorderSide(
-                                            color: Colors.white60,
+                                          contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 6,
                                           ),
+                                          fillColor: Colors.white,
+                                          filled: true,
                                         ),
-                                        contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 14,
-                                          vertical: 6,
-                                        ),
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                      ),
-                                    ),
-                                  ),
+                                      )),
                                   const SizedBox(
                                     height: 18,
                                   ),
@@ -179,9 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),
                                     child: InkWell(
-                                      onTap: () {
-                                          Get.to(HomePage());
-                                      },
+                                      onTap: login,
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
                                         padding: EdgeInsets.symmetric(
