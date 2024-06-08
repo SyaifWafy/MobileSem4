@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:projekmobile_sem4/authentication/lupa_password.dart';
 import 'package:projekmobile_sem4/pages/home_page.dart';
 import 'signup_screen.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,34 +17,31 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
   var isObsecure = true.obs;
 
-  // Future<void> login() async {
-  //   if (formKey.currentState!.validate()) {
-  //     final response = await http.post(
-  //       Uri.parse('http://192.168.100.9/API/login.php'),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       },
-  //       body: jsonEncode(<String, String>{
-  //         'username': usernameController.text,
-  //         'password': passwordController.text,
-  //       }),
-  //     );
+  Future<void> login() async {
+    if (formKey.currentState!.validate()) {
+      final response = await http.post(
+        Uri.parse('http://192.168.8.100/ProjekMobileSem4/projekmobile_sem4/lib/API/login.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username_cus': usernameController.text,
+          'pw_cus': passwordController.text,
+        }),
+      );
 
-  //     if (response.statusCode == 200) {
-  //       final responseData = json.decode(response.body);
-  //       if (responseData['message'] == 'Login successful') {
-  //         // Handle success (e.g., navigate to home page)
-  //         Get.to(HomePage());
-  //       } else {
-  //         // Handle failure
-  //         Get.snackbar("Error", responseData['message']);
-  //       }
-  //     } else {
-  //       // Handle error
-  //       Get.snackbar("Error", "Failed to login. Please try again.");
-  //     }
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['message'] == 'Login berhasil') {
+          Get.to(HomePage());
+        } else {
+          Get.snackbar("Error", responseData['message']);
+        }
+      } else {
+        Get.snackbar("Error", "Login gagal. Coba lagi.");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,14 +90,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextFormField(
                                     controller: usernameController,
                                     validator: (val) => val == ""
-                                        ? "Please write username"
+                                        ? "Mohon masukkan username anda"
                                         : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.account_circle_sharp,
                                         color: Colors.black,
                                       ),
-                                      hintText: "username...",
+                                      hintText: "Username...",
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(30),
                                         borderSide: const BorderSide(
@@ -140,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         controller: passwordController,
                                         obscureText: isObsecure.value,
                                         validator: (val) => val == ""
-                                            ? "Please write password"
+                                            ? "Mohon masukkan password anda"
                                             : null,
                                         decoration: InputDecoration(
                                           prefixIcon: const Icon(
@@ -159,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   color: Colors.black,
                                                 ),
                                               )),
-                                          hintText: "password...",
+                                          hintText: "Password...",
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(30),
@@ -203,11 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),
                                     child: InkWell(
-                                      // onTap: login,
-                                      onTap: () {
-                                        // Mock login success
-                                        Get.to(HomePage());
-                                      },
+                                      onTap: login,
                                       borderRadius: BorderRadius.circular(30),
                                       child: const Padding(
                                         padding: EdgeInsets.symmetric(
@@ -215,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           horizontal: 28,
                                         ),
                                         child: Text(
-                                          "Login",
+                                          "Masuk",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,

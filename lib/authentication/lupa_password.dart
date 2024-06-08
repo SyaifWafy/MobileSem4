@@ -29,7 +29,7 @@ class _LupaPasswordState extends State<LupaPassword> {
   Future<void> resetPassword() async {
     if (formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('http://192.168.100.9/API/reset_password.php'),
+        Uri.parse('http://192.168.8.100/ProjekMobileSem4/projekmobile_sem4/lib/API/forgot_password.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -43,8 +43,7 @@ class _LupaPasswordState extends State<LupaPassword> {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        if (responseData['message'] == 'Password reset successful') {
-          // Handle success (e.g., navigate to login page)
+        if (responseData['message'] == 'Password berhasil direset') {
           Get.to(LoginScreen());
         } else {
           // Handle failure
@@ -52,7 +51,7 @@ class _LupaPasswordState extends State<LupaPassword> {
         }
       } else {
         // Handle error
-        Get.snackbar("Error", "Failed to reset password. Please try again.");
+        Get.snackbar("Error", "Password gagal diperbarui, coba lagi.");
       }
     }
   }
@@ -97,14 +96,14 @@ class _LupaPasswordState extends State<LupaPassword> {
                                   TextFormField(
                                     controller: usernameController,
                                     validator: (val) => val == ""
-                                        ? "Please write username"
+                                        ? "Mohon masukkan username anda"
                                         : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.account_circle_sharp,
                                         color: Colors.black,
                                       ),
-                                      hintText: "username...",
+                                      hintText: "Username...",
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(30),
@@ -154,7 +153,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                       },
                                       validator: (val) =>
                                           val == null || val.isEmpty
-                                              ? "Please select a question"
+                                              ? "Mohon pilih pertanyaan anda"
                                               : null,
                                       items: pertanyaanList
                                           .map(
@@ -170,7 +169,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                           Icons.question_mark,
                                           color: Colors.black,
                                         ),
-                                        hintText: "Select a question...",
+                                        hintText: "Pilih pertanyaan...",
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -217,7 +216,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                       obscureText: isObsecure.value,
                                       validator: (val) =>
                                           val == ""
-                                              ? "Please write password baru"
+                                              ? "Masukkan password baru"
                                               : null,
                                       decoration: InputDecoration(
                                         prefixIcon: const Icon(
@@ -238,7 +237,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                             ),
                                           ),
                                         ),
-                                        hintText: "password baru...",
+                                        hintText: "Password baru...",
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -285,9 +284,9 @@ class _LupaPasswordState extends State<LupaPassword> {
                                           konfirmasiPasswordBaruController,
                                       obscureText: isObsecure.value,
                                       validator: (val) => val == ""
-                                          ? "Please confirm password baru"
+                                          ? "Mohon masukkan password anda kembali"
                                           : val != passwordBaruController.text
-                                              ? "Passwords do not match"
+                                              ? "Password tidak cocok"
                                               : null,
                                       decoration: InputDecoration(
                                         prefixIcon: const Icon(
@@ -309,7 +308,7 @@ class _LupaPasswordState extends State<LupaPassword> {
                                           ),
                                         ),
                                         hintText:
-                                            "konfirmasi password baru...",
+                                            "Konfirmasi password baru...",
                                         border: OutlineInputBorder(
                                           borderRadius:
                                               BorderRadius.circular(30),
@@ -354,14 +353,14 @@ class _LupaPasswordState extends State<LupaPassword> {
                                     controller: jawabanController,
                                     validator: (val) =>
                                         val == ""
-                                            ? "Please write jawaban"
+                                            ? "Mohon masukkan jawaban anda"
                                             : null,
                                     decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.question_answer_sharp,
                                         color: Colors.black,
                                       ),
-                                      hintText: "jawaban...",
+                                      hintText: "Jawaban...",
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(30),

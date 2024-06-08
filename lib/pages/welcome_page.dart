@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:projekmobile_sem4/authentication/login_screen.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
-
 import '../nav_pages.dart/main_wrapper.dart';
 import '../widget/reuseable_text.dart';
 import '../models/welcome_model.dart';
