@@ -19,11 +19,11 @@ class _LupaPasswordState extends State<LupaPassword> {
   var selectedPertanyaan = ''.obs;
 
   final List<String> pertanyaanList = [
-    'Apa Makanan Favoritmu?',
-    'Apa Minuman Favoritmu?',
-    'Siapa Nama Hewan Peliharaanmu?',
-    'Apa Warna Favoritmu?',
-    'Dimana Kota Kelahiranmu?'
+    'Apa makanan favoritmu?',
+    'Apa minuman favoritmu?',
+    'Siapa nama hewan peliharaanmu?',
+    'Apa warna favoritmu?',
+    'Dimana kota lahirmu?'
   ];
 
   Future<void> resetPassword() async {
@@ -34,8 +34,8 @@ class _LupaPasswordState extends State<LupaPassword> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'username': usernameController.text,
-          'password_baru': passwordBaruController.text,
+          'username_cus': usernameController.text,
+          'newPassword': passwordBaruController.text,
           'pertanyaan': selectedPertanyaan.value,
           'jawaban': jawabanController.text,
         }),
@@ -43,7 +43,7 @@ class _LupaPasswordState extends State<LupaPassword> {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        if (responseData['message'] == 'Password berhasil direset') {
+        if (responseData['message'] == 'Password berhasil diperbarui') {
           Get.to(LoginScreen());
         } else {
           // Handle failure
