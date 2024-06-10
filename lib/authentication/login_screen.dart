@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> login() async {
     if (formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('http://192.168.8.100/ProjekMobileSem4/projekmobile_sem4/lib/API/login.php'),
+        Uri.parse('http://192.168.1.15/ProjekMobileSem4/projekmobile_sem4/lib/API/login.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
           'pw_cus': passwordController.text,
         }),
       );
-
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         if (responseData['message'] == 'Login berhasil') {

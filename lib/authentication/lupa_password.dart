@@ -29,7 +29,7 @@ class _LupaPasswordState extends State<LupaPassword> {
   Future<void> resetPassword() async {
     if (formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('http://192.168.8.100/ProjekMobileSem4/projekmobile_sem4/lib/API/forgot_password.php'),
+        Uri.parse('http://192.168.1.15/ProjekMobileSem4/projekmobile_sem4/lib/API/forgot_password.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -210,6 +210,57 @@ class _LupaPasswordState extends State<LupaPassword> {
                                   const SizedBox(
                                     height: 18,
                                   ),
+                                  TextFormField(
+                                    controller: jawabanController,
+                                    validator: (val) =>
+                                        val == ""
+                                            ? "Mohon masukkan jawaban anda"
+                                            : null,
+                                    decoration: InputDecoration(
+                                      prefixIcon: const Icon(
+                                        Icons.question_answer_sharp,
+                                        color: Colors.black,
+                                      ),
+                                      hintText: "Jawaban...",
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white60,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white60,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white60,
+                                        ),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Colors.white60,
+                                        ),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 14,
+                                        vertical: 6,
+                                      ),
+                                      fillColor: Colors.white,
+                                      filled: true,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 18,
+                                  ),
                                   Obx(
                                     () => TextFormField(
                                       controller: passwordBaruController,
@@ -344,57 +395,6 @@ class _LupaPasswordState extends State<LupaPassword> {
                                         fillColor: Colors.white,
                                         filled: true,
                                       ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 18,
-                                  ),
-                                  TextFormField(
-                                    controller: jawabanController,
-                                    validator: (val) =>
-                                        val == ""
-                                            ? "Mohon masukkan jawaban anda"
-                                            : null,
-                                    decoration: InputDecoration(
-                                      prefixIcon: const Icon(
-                                        Icons.question_answer_sharp,
-                                        color: Colors.black,
-                                      ),
-                                      hintText: "Jawaban...",
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Colors.white60,
-                                        ),
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 14,
-                                        vertical: 6,
-                                      ),
-                                      fillColor: Colors.white,
-                                      filled: true,
                                     ),
                                   ),
                                   const SizedBox(
