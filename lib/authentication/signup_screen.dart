@@ -21,11 +21,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var selectedPertanyaan = ''.obs;
 
   final List<String> pertanyaanList = [
-    'Apa Makanan Favoritmu?',
-    'Apa Minuman Favoritmu?',
-    'Siapa Nama Hewan Peliharaanmu?',
-    'Apa Warna Favoritmu?',
-    'Dimana Kota Kelahiranmu?'
+    'Apa makanan favoritmu?',
+    'Apa minuman favoritmu?',
+    'Siapa nama hewan peliharaanmu?',
+    'Apa warna favoritmu?',
+    'Dimana kota lahirmu?'
   ];
 
   Future<void> signUp() async {
