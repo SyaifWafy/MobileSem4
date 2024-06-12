@@ -4,7 +4,7 @@ import '../models/wisata_model.dart';
 import '../models/event_model.dart';
 
 class ApiService {
-  final String baseUrl = "http://192.168.8.100/ProjekMobileSem4/projekmobile_sem4/lib/API";
+  final String baseUrl = "http://192.168.100.9/MobileSem4/lib/API";
 
   Future<List<Wisata>> fetchTempatWisata() async {
     try {
@@ -50,6 +50,25 @@ class ApiService {
     }
   }
 
+  Future<List<Wisata>> fetchImages() async {
+  try {
+    final response = await http.get(
+      Uri.parse('$baseUrl/readwisataimages.php'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      return jsonResponse.map((image) => Wisata.fromJson(image)).toList();
+    } else {
+      throw Exception('Failed to load images');
+    }
+  } catch (e) {
+    throw Exception('Failed to load images. Error: $e');
+  }
+}
+
   Future<void> submitMasukan(String nama, String masukan) async {
     try {
       final response = await http.post(
@@ -74,6 +93,6 @@ class ApiService {
       }
     } catch (e) {
       throw Exception('Gagal mengirim masukan. Error: $e');
-    }
-  }
+}
+}
 }

@@ -11,12 +11,14 @@ class WisataPage extends StatefulWidget {
 }
 
 class _WisataPageState extends State<WisataPage> {
-  late Future<List<Wisata>> futurewisata;
+  late Future<List<Wisata>> futureWisata;
+  late Future<List<Wisata>> futureImages;
 
   @override
   void initState() {
     super.initState();
-    futurewisata = ApiService().fetchTempatWisata();
+    futureWisata = ApiService().fetchTempatWisata();
+    futureImages = ApiService().fetchImages();
   }
 
   @override
@@ -26,14 +28,20 @@ class _WisataPageState extends State<WisataPage> {
         leading: Container(),
         title: const Text('Wisata'),
       ),
-      body: FutureBuilder<List<Wisata>>(
-        future: futurewisata,
+      body: FutureBuilder<List<dynamic>>(
+        future: Future.wait([futureWisata, futureImages]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            var tempatWisataList = snapshot.data![0] as List<Wisata>;
+            var imageList = snapshot.data![1] as List<Wisata>;
+            var imageMap = {
+              for (var item in imageList) item.kd_wisata: item.gambarwisata
+            };
+
             return GridView.builder(
               padding: const EdgeInsets.all(10.0),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -41,15 +49,18 @@ class _WisataPageState extends State<WisataPage> {
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
               ),
-              itemCount: snapshot.data!.length,
+              itemCount: tempatWisataList.length,
               itemBuilder: (context, index) {
-                var tempatWisata = snapshot.data![index];
+                var tempatWisata = tempatWisataList[index];
+                var dataImage = imageMap[tempatWisata.kd_wisata];
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailPage(tempatWisata: tempatWisata),
+                        builder: (context) =>
+                            DetailPage(tempatWisata: tempatWisata),
                       ),
                     );
                   },
@@ -66,17 +77,26 @@ class _WisataPageState extends State<WisataPage> {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
                             ),
-                            child: Image.network(
-                              tempatWisata.gambarwisata,
+                            child: Container(
                               width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(child: Icon(Icons.error));
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(child: CircularProgressIndicator());
-                              },
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: dataImage != null &&
+                                          dataImage.isNotEmpty
+                                      ? NetworkImage(
+                                          'http://192.168.1.16/WebSem4/storage/app/public/img/' +
+                                              dataImage)
+                                      : const AssetImage(
+                                              'assets/fallback_image.png')
+                                          as ImageProvider,
+                                  fit: BoxFit.cover,
+                                  onError: (exception, stackTrace) {
+                                    print(
+                                        'Error loading image: $exception\n$stackTrace');
+                                    // Handle error loading image
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -90,10 +110,10 @@ class _WisataPageState extends State<WisataPage> {
                                 size: 15,
                               ),
                               SizedBox(width: 5),
-                              Expanded( // Gunakan Expanded di sekitar Text widget
+                              Expanded(
                                 child: Text(
                                   tempatWisata.lokasi,
-                                  overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
