@@ -2,12 +2,15 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:projekmobile_sem4/authentication/login_screen.dart';
+import 'package:projekmobile_sem4/widget/logout_button.dart';
 import '../models/wisata_model.dart';
 import '../models/event_model.dart';
 import '../services/api_service.dart';
 import '../nav_pages.dart/main_wrapper.dart';
 import '../widget/reuseable_text.dart';
 import '../widget/reuseabale_middle_app_text.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -310,21 +313,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: Container(), // Menghapus tombol kembali
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 5),
-              child: GestureDetector(
-                onTap: () => Get.off(() => const MainWrapper()),
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/jw.png",
-                    width: 70,
-                    height: 70,
-                  ),
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: GestureDetector(
+              onTap: () => Get.off(() => const MainWrapper()),
+              child: ClipOval(
+                child: Image.asset(
+                  "assets/images/jw.png",
+                  width: 70,
+                  height: 70,
                 ),
               ),
-            )
+            ),
+          ),
+          actions: [
+            LogoutButton(),
           ],
         ),
       ),
