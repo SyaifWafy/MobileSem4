@@ -35,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return;
         }
       final response = await http.post(
-        Uri.parse('http://192.168.1.15/ProjekMobileSem4/projekmobile_sem4/lib/API/register.php'),
+        Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/register.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

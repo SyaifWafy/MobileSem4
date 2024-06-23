@@ -29,7 +29,7 @@ class _LupaPasswordState extends State<LupaPassword> {
   Future<void> resetPassword() async {
     if (formKey.currentState!.validate()) {
       final response = await http.post(
-        Uri.parse('http://192.168.1.15/ProjekMobileSem4/projekmobile_sem4/lib/API/forgot_password.php'),
+        Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/forgot_password.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

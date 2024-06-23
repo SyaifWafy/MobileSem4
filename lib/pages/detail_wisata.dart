@@ -21,6 +21,13 @@ class DetailPage extends StatelessWidget {
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 200,
+                  color: Colors.grey[300],
+                  child: Icon(Icons.image_not_supported, size: 60, color: Colors.grey[600]),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -46,7 +53,6 @@ class DetailPage extends StatelessWidget {
                     tempatWisata.keterangan,
                     style: TextStyle(fontSize: 16),
                   ),
-                  // Tambahkan bagian event terkait di sini jika ada
                 ],
               ),
             ),

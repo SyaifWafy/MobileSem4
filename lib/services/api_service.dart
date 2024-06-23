@@ -4,7 +4,7 @@ import '../models/wisata_model.dart';
 import '../models/event_model.dart';
 
 class ApiService {
-  final String baseUrl = "http://192.168.1.15/ProjekMobileSem4/projekmobile_sem4/lib/API";
+  final String baseUrl = "http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API";
 
   Future<List<Wisata>> fetchTempatWisata() async {
     try {

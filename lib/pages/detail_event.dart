@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/event_model.dart';
-import '../models/wisata_model.dart';
 
 class DetailEventPage extends StatelessWidget {
   final Event event;
@@ -15,12 +14,20 @@ class DetailEventPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
               event.gambarevent,
               height: 300,
+              width: double.infinity,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 300,
+                  color: Colors.grey[300],
+                  child: Icon(Icons.image_not_supported, size: 60, color: Colors.grey[600]),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),

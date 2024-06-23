@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import '../services/api_service.dart';
 import '../models/event_model.dart';
 import 'detail_event.dart';
@@ -19,6 +22,21 @@ class _EventPageState extends State<EventPage> {
   void initState() {
     super.initState();
     futureEvents = ApiService().fetchEvent();
+  }
+
+  Future<String> fetchImageUrl(String kdEvent) async {
+    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/get_imageevent.php?kd_event=$kdEvent'));
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['image_url'] is String) {
+        print("Fetched image URL: ${jsonResponse['image_url']}");
+        return jsonResponse['image_url'];
+      } else {
+        throw Exception('Invalid image URL');
+      }
+    } else {
+      throw Exception('Failed to load image');
+    }
   }
 
   @override
@@ -68,16 +86,29 @@ class _EventPageState extends State<EventPage> {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
                             ),
-                            child: Image.network(
-                              event.gambarevent,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(child: Icon(Icons.error));
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(child: CircularProgressIndicator());
+                            child: FutureBuilder<String>(
+                              future: fetchImageUrl(event.kd_event.toString()),
+                              builder: (context, imageSnapshot) {
+                                if (imageSnapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (imageSnapshot.hasError) {
+                                  return const Center(child: Icon(Icons.error));
+                                } else if (imageSnapshot.hasData) {
+                                  return Image.network(
+                                    imageSnapshot.data!,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Center(child: Icon(Icons.error));
+                                    },
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(child: CircularProgressIndicator());
+                                    },
+                                  );
+                                } else {
+                                  return const Center(child: Icon(Icons.error));
+                                }
                               },
                             ),
                           ),
@@ -85,7 +116,7 @@ class _EventPageState extends State<EventPage> {
                         ListTile(
                           title: Text(
                             event.judul,
-                            overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                            overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Row(
                             children: [
@@ -98,7 +129,7 @@ class _EventPageState extends State<EventPage> {
                               Expanded(
                                 child: Text(
                                   event.tempat,
-                                  overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],

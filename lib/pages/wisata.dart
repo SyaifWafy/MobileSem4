@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../models/wisata_model.dart';
 import 'detail_wisata.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class WisataPage extends StatefulWidget {
   const WisataPage({Key? key}) : super(key: key);
@@ -17,6 +19,21 @@ class _WisataPageState extends State<WisataPage> {
   void initState() {
     super.initState();
     futurewisata = ApiService().fetchTempatWisata();
+  }
+
+  Future<String> fetchImageUrl(String kdWisata) async {
+    final response = await http.get(Uri.parse('http://172.26.189.216/ProjekMobileSem4/projekmobile_sem4/lib/API/get_imagewisata.php?kd_wisata=$kdWisata'));
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      if (jsonResponse['image_url'] is String) {
+        print("Fetched image URL: ${jsonResponse['image_url']}");
+        return jsonResponse['image_url'];
+      } else {
+        throw Exception('Invalid image URL');
+      }
+    } else {
+      throw Exception('Failed to load image');
+    }
   }
 
   @override
@@ -66,16 +83,29 @@ class _WisataPageState extends State<WisataPage> {
                               topLeft: Radius.circular(10),
                               topRight: Radius.circular(10),
                             ),
-                            child: Image.network(
-                              tempatWisata.gambarwisata,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(child: Icon(Icons.error));
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(child: CircularProgressIndicator());
+                            child: FutureBuilder<String>(
+                              future: fetchImageUrl(tempatWisata.kd_wisata.toString()),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Center(child: CircularProgressIndicator());
+                                } else if (snapshot.hasError) {
+                                  return const Center(child: Icon(Icons.error));
+                                } else if (snapshot.hasData) {
+                                  return Image.network(
+                                    snapshot.data!,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return const Center(child: Icon(Icons.error));
+                                    },
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(child: CircularProgressIndicator());
+                                    },
+                                  );
+                                } else {
+                                  return const Center(child: Icon(Icons.error));
+                                }
                               },
                             ),
                           ),
@@ -90,10 +120,10 @@ class _WisataPageState extends State<WisataPage> {
                                 size: 15,
                               ),
                               SizedBox(width: 5),
-                              Expanded( // Gunakan Expanded di sekitar Text widget
+                              Expanded(
                                 child: Text(
                                   tempatWisata.lokasi,
-                                  overflow: TextOverflow.ellipsis, // Tambahkan ini untuk memotong teks yang terlalu panjang
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ],
