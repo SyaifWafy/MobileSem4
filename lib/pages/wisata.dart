@@ -13,12 +13,12 @@ class WisataPage extends StatefulWidget {
 }
 
 class _WisataPageState extends State<WisataPage> {
-  late Future<List<Wisata>> futurewisata;
+  late Future<List<Wisata>> futureWisata;
 
   @override
   void initState() {
     super.initState();
-    futurewisata = ApiService().fetchTempatWisata();
+    futureWisata = ApiService().fetchTempatWisata();
   }
 
   Future<String> fetchImageUrl(String kdWisata) async {
@@ -44,7 +44,7 @@ class _WisataPageState extends State<WisataPage> {
         title: const Text('Wisata'),
       ),
       body: FutureBuilder<List<Wisata>>(
-        future: futurewisata,
+        future: futureWisata,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
